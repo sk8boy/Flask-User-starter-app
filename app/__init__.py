@@ -1,28 +1,29 @@
 # __init__.py is a special Python file that allows a directory to become
 # a Python package so it can be accessed using the 'import' statement.
 
-from datetime import datetime
-import os
-
 from flask import Flask
-from flask_script import Manager
-from flask_sqlalchemy import SQLAlchemy
 from flask_mail import Mail
-from flask_migrate import Migrate, MigrateCommand
+from flask_migrate import Migrate
+from flask_sqlalchemy import SQLAlchemy
+from flask_babelex import Babel
+# from flask.ext.babelex import Babel
 from flask_user import UserManager
 from flask_wtf.csrf import CSRFProtect
-
 
 # Instantiate Flask extensions
 csrf_protect = CSRFProtect()
 db = SQLAlchemy()
 mail = Mail()
 migrate = Migrate()
+babel = None
+
 
 # Initialize Flask Application
 def create_app(extra_config_settings={}):
     """Create a Flask application.
     """
+    global babel
+
     # Instantiate Flask
     app = Flask(__name__)
 
@@ -32,6 +33,10 @@ def create_app(extra_config_settings={}):
     app.config.from_object('app.local_settings')
     # Load extra settings from extra_config_settings param
     app.config.update(extra_config_settings)
+
+    # Initialize Flask-BabelEx
+    babel = Babel(app)
+    # app.config['BABEL_DEFAULT_LOCALE'] = 'zh_CN'
 
     # Setup Flask-SQLAlchemy
     db.init_app(app)
@@ -57,7 +62,7 @@ def create_app(extra_config_settings={}):
 
     app.jinja_env.globals['bootstrap_is_hidden_field'] = is_hidden_field_filter
 
-    # Setup an error-logger to send emails to app.config.ADMINS
+    # Set up an error-logger to send emails to app.config.ADMINS
     init_email_error_handler(app)
 
     # Setup Flask-User to handle user account related forms
@@ -109,8 +114,3 @@ def init_email_error_handler(app):
     app.logger.addHandler(mail_handler)
 
     # Log errors using: app.logger.error('Some error message')
-
-
-
-
-

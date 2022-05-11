@@ -5,8 +5,8 @@
 import os
 
 # Application settings
-APP_NAME = "Flask-User starter app"
-APP_SYSTEM_ERROR_SUBJECT_LINE = APP_NAME + " system error"
+APP_NAME = u'高新处厅内签报登记系统'
+APP_SYSTEM_ERROR_SUBJECT_LINE = APP_NAME + u'系统错误'
 
 # Flask settings
 CSRF_ENABLED = True
@@ -16,6 +16,8 @@ SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 # Flask-User settings
 USER_APP_NAME = APP_NAME
+USER_CORPORATION_NAME = u'科技厅高新处'
+USER_COPYRIGHT_YEAR = 2022
 USER_ENABLE_CHANGE_PASSWORD = True  # Allow users to change their password
 USER_ENABLE_CHANGE_USERNAME = False  # Allow users to change their username
 USER_ENABLE_CONFIRM_EMAIL = True  # Force users to confirm their email

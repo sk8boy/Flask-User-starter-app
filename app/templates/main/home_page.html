@@ -1,11 +1,32 @@
 {% extends "main/main_base.html" %}  {# main/main_base.html extends layout.html #}
 
 {% block content %}
-    <h2>{%trans%}Home page{%endtrans%}</h2>
-    <p><a href={{ url_for('user.register') }}>{%trans%}Register{%endtrans%}</a></p>
-    <p><a href={{ url_for('user.login') }}>{%trans%}Sign in{%endtrans%}</a></p>
-    <p><a href={{ url_for('main.home_page') }}>{%trans%}Home Page{%endtrans%}</a> (accessible to anyone)</p>
-    <p><a href={{ url_for('main.member_page') }}>{%trans%}Member Page{%endtrans%}</a> (login_required: member@example.com / Password1)</p>
-    <p><a href={{ url_for('main.admin_page') }}>{%trans%}Admin Page{%endtrans%}</a> (roles_required: admin@example.com / Password1)</p>
-    <p><a href={{ url_for('user.logout') }}>{%trans%}Sign out{%endtrans%}</a></p>
+            <h2>{%trans%}签报登记记录{%endtrans%}</h2>
+            {{ pagination.info }}
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+        <!--                <th>#</th>-->
+                        <th>序号</th>
+                        <th>签报标题</th>
+                        <th>登记时间</th>
+                        <th>起草人</th>
+                        <th>文号</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for report in reports %}
+                    <tr>
+        <!--                <td>{{ loop.index + pagination.skip }}</td>-->
+                        <td>{{ report.id }}</td>
+                        <td>{{ report.title }}</td>
+                        <td>{{ report.requested_at }}</td>
+                        <td>{{ report.first_name }} {{ report.last_name }}</td>
+                        <td>{{ report.sn }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            {{ pagination.links }}
+
 {% endblock %}

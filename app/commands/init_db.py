@@ -11,6 +11,8 @@ from flask_script import Command
 
 from app import db
 from app.models.user_models import User, Role
+from app.models.report_models import Report
+
 
 class InitDbCommand(Command):
     """ Initialize the database."""
@@ -19,11 +21,13 @@ class InitDbCommand(Command):
         init_db()
         print('Database has been initialized.')
 
+
 def init_db():
     """ Initialize the database."""
     db.drop_all()
     db.create_all()
     create_users()
+    create_test_report()
 
 
 def create_users():
@@ -68,4 +72,16 @@ def find_or_create_user(first_name, last_name, email, password, role=None):
     return user
 
 
+def create_test_report():
+    db.create_all()
 
+    user = find_or_create_user(u'Member', u'Example', u'member@example.com', 'Password1')
+
+    report = Report(title=u'测试',
+                    requested_at=datetime.datetime.utcnow(),
+                    drafted_by=user.id)
+    db.session.add(report)
+    db.session.flush()
+    report.sn = Report.gen_sn(report.id)
+    # Save to DB
+    db.session.commit()

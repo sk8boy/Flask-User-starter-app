@@ -7,7 +7,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- These 3 meta tags MUST come first -->
 
-        <title>Flask-User Starter App</title>
+        <title>高新处厅内签报登记系统</title>
 
         <!-- Bootstrap CSS and JS -->
         <link href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -25,18 +25,29 @@
         {% block body %}
         <!-- Application specific HTML -->
         <div id="header-div" class="clearfix with-margins">
-            <div class="pull-left"><a href="/"><h1 class="no-margins">Flask-User starter app</h1></a></div>
-            <div class="pull-right">
-                {% if current_user.is_authenticated %}
-                    <a href="{{ url_for('main.user_profile_page') }}">{{ current_user.first_name or current_user.username or current_user.email }}</a>
-                    &nbsp; | &nbsp;
-                    <a href="{{ url_for('user.logout') }}">Sign out</a>
-                {% else %}
-                    <a href="{{ url_for('user.login') }}">Sign in</a>
-                {% endif %}
-            </div>
+            <div class="pull-left"><a href="/"><h1 class="no-margins">高新处厅内签报登记系统</h1></a></div>
         </div>
         <hr class="no-margins"/>
+
+            <div class="nav">
+                <div class="pull-left">
+                    <a href={{ url_for('main.home_page') }}>首页</a>
+                    <a href={{ url_for('main.member_page') }}>签报登记</a>
+                    <a href={{ url_for('main.admin_page') }}>管理员页面</a>
+                </div>
+                <div class="pull-right">
+                    {% if current_user.is_authenticated %}
+                    <a href="{{ url_for('main.user_profile_page') }}">{{ current_user.first_name or current_user.username or current_user.email }}</a>
+                    &nbsp; | &nbsp;
+                    <a href="{{ url_for('user.logout') }}">退出</a>
+                {% else %}
+                    <a href="{{ url_for('user.login') }}">登录</a>
+                    &nbsp; | &nbsp;
+                    <a href={{ url_for('user.register') }}>注册</a>
+                {% endif %}
+                </div>
+            </div>
+
 
         <div id="main-div" class="with-margins">
         {% block pre_content %}{% endblock %}
@@ -63,8 +74,8 @@
         <br/>
         <hr class="no-margins"/>
         <div id="footer-div" class="clearfix with-margins">
-            <div class="pull-left">{{ user_manager.app_name }} v1.0</div>
-            <div class="pull-right">&copy; 2014 MyCorp</div>
+            <div class="pull-left">厅内签报登记系统 v1.0</div>
+            <div class="pull-right">&copy; 2022 四川省科技厅高新处</div>
         </div>
 
         <!-- Bootstrap JS -->

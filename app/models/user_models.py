@@ -6,7 +6,9 @@ from flask_user import UserMixin
 # from flask_user.forms import RegisterForm
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, validators
+
 from app import db
+from app.models.report_models import Report
 
 
 # Define the User data model. Make sure to add the flask_user.UserMixin !!
@@ -29,6 +31,10 @@ class User(db.Model, UserMixin):
     # Relationships
     roles = db.relationship('Role', secondary='users_roles',
                             backref=db.backref('users', lazy='dynamic'))
+    reports = db.relationship('Report', backref=db.backref('reports'))
+
+    def __repr__(self):
+        return '<User {}'.format(self.first_name + self.last_name)
 
 
 # Define the Role data model
